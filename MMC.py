@@ -49,9 +49,9 @@ fig.update_layout(
         xaxis_title="σ1",
         yaxis_title="σ2",
         zaxis_title="σ3",
-        xaxis=dict(range=[0, 60]),
-        yaxis=dict(range=[0, 60]),
-        zaxis=dict(range=[0, 60]),
+        xaxis=dict(range=[-20, 100]),
+        yaxis=dict(range=[-20, 100]),
+        zaxis=dict(range=[-20, 100]),
         aspectmode="cube"  # Сохраняем пропорции осей
     )
 )
