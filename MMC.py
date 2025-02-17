@@ -40,20 +40,53 @@ theta, p = np.meshgrid(theta, p)
 x, y, z = f(theta, p, M, p0)
 
 # Создание графика с помощью Plotly
-fig = go.Figure(data=[go.Surface(z=z, x=x, y=y, colorscale='Viridis', showscale=False)])
+fig = go.Figure()
+
+# Добавление поверхности
+fig.add_trace(go.Surface(z=z, x=x, y=y, colorscale='Viridis', showscale=False))
+
+# Настройка осей напряжений
+axis_limit = 60  # Длина осей
+fig.add_trace(go.Scatter3d(
+    x=[0, axis_limit], y=[0, 0], z=[0, 0],
+    mode="lines", line=dict(color="red"), name="σ₁"
+))
+fig.add_trace(go.Scatter3d(
+    x=[0, 0], y=[0, axis_limit], z=[0, 0],
+    mode="lines", line=dict(color="green"), name="σ₂"
+))
+fig.add_trace(go.Scatter3d(
+    x=[0, 0], y=[0, 0], z=[0, axis_limit],
+    mode="lines", line=dict(color="blue"), name="σ₃"
+))
+
+# Добавление меток для осей
+fig.add_annotation(
+    x=axis_limit * 0.5, y=0, z=0,
+    text="σ₁", showarrow=False, font=dict(color="red", size=14)
+)
+fig.add_annotation(
+    x=0, y=axis_limit * 0.5, z=0,
+    text="σ₂", showarrow=False, font=dict(color="green", size=14)
+)
+fig.add_annotation(
+    x=0, y=0, z=axis_limit * 0.5,
+    text="σ₃", showarrow=False, font=dict(color="blue", size=14)
+)
 
 # Настройка осей
 fig.update_layout(
     title="Поверхность текучести MODIFIED CAM CLAY",
     scene=dict(
-        xaxis_title="σ1",
-        yaxis_title="σ2",
-        zaxis_title="σ3",
-        xaxis=dict(range=[-20, 100]),
-        yaxis=dict(range=[-20, 100]),
-        zaxis=dict(range=[-20, 100]),
+        xaxis_title="σ₁",
+        yaxis_title="σ₂",
+        zaxis_title="σ₃",
+        xaxis=dict(range=[0, axis_limit]),
+        yaxis=dict(range=[0, axis_limit]),
+        zaxis=dict(range=[0, axis_limit]),
         aspectmode="cube"  # Сохраняем пропорции осей
-    )
+    ),
+    legend=dict(title="Оси напряжений")
 )
 
 # Отображение графика в Streamlit
