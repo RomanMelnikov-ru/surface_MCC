@@ -60,19 +60,22 @@ fig.add_trace(go.Scatter3d(
     mode="lines", line=dict(color="blue"), name="σ₃"
 ))
 
-# Добавление меток для осей
-fig.add_annotation(
-    x=axis_limit * 0.5, y=0, z=0,
-    text="σ₁", showarrow=False, font=dict(color="red", size=14)
-)
-fig.add_annotation(
-    x=0, y=axis_limit * 0.5, z=0,
-    text="σ₂", showarrow=False, font=dict(color="green", size=14)
-)
-fig.add_annotation(
-    x=0, y=0, z=axis_limit * 0.5,
-    text="σ₃", showarrow=False, font=dict(color="blue", size=14)
-)
+# Добавление меток для осей через Scatter3d
+fig.add_trace(go.Scatter3d(
+    x=[axis_limit * 0.5], y=[0], z=[0],
+    mode="text", text=["σ₁"], textposition="middle center",
+    textfont=dict(color="red", size=14), showlegend=False
+))
+fig.add_trace(go.Scatter3d(
+    x=[0], y=[axis_limit * 0.5], z=[0],
+    mode="text", text=["σ₂"], textposition="middle center",
+    textfont=dict(color="green", size=14), showlegend=False
+))
+fig.add_trace(go.Scatter3d(
+    x=[0], y=[0], z=[axis_limit * 0.5],
+    mode="text", text=["σ₃"], textposition="middle center",
+    textfont=dict(color="blue", size=14), showlegend=False
+))
 
 # Настройка осей
 fig.update_layout(
