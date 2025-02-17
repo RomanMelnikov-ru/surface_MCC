@@ -46,47 +46,28 @@ fig = go.Figure()
 fig.add_trace(go.Surface(z=z, x=x, y=y, colorscale='Viridis', showscale=False))
 
 # Настройка осей напряжений
-axis_limit = 60  # Длина осей
+axis_limit_positive = 100
+axis_limit_negative = -50
+
 fig.add_trace(go.Scatter3d(
-    x=[0, axis_limit], y=[0, 0], z=[0, 0],
+    x=[0, axis_limit_positive], y=[0, 0], z=[0, 0],
     mode="lines", line=dict(color="red"), name="σ₁"
 ))
 fig.add_trace(go.Scatter3d(
-    x=[0, 0], y=[0, axis_limit], z=[0, 0],
+    x=[0, 0], y=[0, axis_limit_positive], z=[0, 0],
     mode="lines", line=dict(color="green"), name="σ₂"
 ))
 fig.add_trace(go.Scatter3d(
-    x=[0, 0], y=[0, 0], z=[0, axis_limit],
+    x=[0, 0], y=[0, 0], z=[0, axis_limit_positive],
     mode="lines", line=dict(color="blue"), name="σ₃"
 ))
 
-# Добавление меток для осей через Scatter3d
-fig.add_trace(go.Scatter3d(
-    x=[axis_limit * 0.5], y=[0], z=[0],
-    mode="text", text=["σ₁"], textposition="middle center",
-    textfont=dict(color="red", size=14), showlegend=False
-))
-fig.add_trace(go.Scatter3d(
-    x=[0], y=[axis_limit * 0.5], z=[0],
-    mode="text", text=["σ₂"], textposition="middle center",
-    textfont=dict(color="green", size=14), showlegend=False
-))
-fig.add_trace(go.Scatter3d(
-    x=[0], y=[0], z=[axis_limit * 0.5],
-    mode="text", text=["σ₃"], textposition="middle center",
-    textfont=dict(color="blue", size=14), showlegend=False
-))
-
-# Настройка осей
+# Настройка осей без меток
 fig.update_layout(
-    title="Поверхность текучести MODIFIED CAM CLAY",
     scene=dict(
-        xaxis_title="σ₁",
-        yaxis_title="σ₂",
-        zaxis_title="σ₃",
-        xaxis=dict(range=[0, axis_limit]),
-        yaxis=dict(range=[0, axis_limit]),
-        zaxis=dict(range=[0, axis_limit]),
+        xaxis=dict(range=[axis_limit_negative, axis_limit_positive], title="", showticklabels=False, showgrid=False, zeroline=False),
+        yaxis=dict(range=[axis_limit_negative, axis_limit_positive], title="", showticklabels=False, showgrid=False, zeroline=False),
+        zaxis=dict(range=[axis_limit_negative, axis_limit_positive], title="", showticklabels=False, showgrid=False, zeroline=False),
         aspectmode="cube"  # Сохраняем пропорции осей
     ),
     legend=dict(title="Оси напряжений")
