@@ -1,6 +1,5 @@
 import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+import plotly.graph_objects as go
 import streamlit as st
 
 # Функция для расчета M
@@ -40,27 +39,22 @@ theta, p = np.meshgrid(theta, p)
 # Вычисление координат поверхности
 x, y, z = f(theta, p, M, p0)
 
-# Создание графика
-fig = plt.figure(figsize=(10, 8))
-ax = fig.add_subplot(111, projection='3d')
-ax.set_title('Поверхность текучести MODIFIED CAM CLAY')
-
-# Построение поверхности
-surface = ax.plot_surface(x, y, z, color='orange', alpha=0.5, edgecolor='red')
+# Создание графика с помощью Plotly
+fig = go.Figure(data=[go.Surface(z=z, x=x, y=y, colorscale='Viridis', showscale=False)])
 
 # Настройка осей
-ax.set_xlabel("σ1")
-ax.set_ylabel("σ2")
-ax.set_zlabel("σ3")
-axis_limit = 60  # Оси дальше, чем поверхность
-ax.set_xlim(0, axis_limit)
-ax.set_ylim(0, axis_limit)
-ax.set_zlim(0, axis_limit)
-
-# Добавляем оси координат
-ax.quiver(0, 0, 0, axis_limit * 0.5, 0, 0, color='r', arrow_length_ratio=0.1, linewidth=1)  # Ось X
-ax.quiver(0, 0, 0, 0, axis_limit * 0.5, 0, color='g', arrow_length_ratio=0.1, linewidth=1)  # Ось Y
-ax.quiver(0, 0, 0, 0, 0, axis_limit * 0.5, color='b', arrow_length_ratio=0.1, linewidth=1)  # Ось Z
+fig.update_layout(
+    title="Поверхность текучести MODIFIED CAM CLAY",
+    scene=dict(
+        xaxis_title="σ1",
+        yaxis_title="σ2",
+        zaxis_title="σ3",
+        xaxis=dict(range=[0, 60]),
+        yaxis=dict(range=[0, 60]),
+        zaxis=dict(range=[0, 60]),
+        aspectmode="cube"  # Сохраняем пропорции осей
+    )
+)
 
 # Отображение графика в Streamlit
-st.pyplot(fig)
+st.plotly_chart(fig)
