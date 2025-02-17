@@ -65,9 +65,9 @@ fig.add_trace(go.Scatter3d(
 # Настройка осей без меток
 fig.update_layout(
     scene=dict(
-        xaxis=dict(range=[axis_limit_negative, axis_limit_positive], title="", showticklabels=False, showgrid=False, zeroline=False),
-        yaxis=dict(range=[axis_limit_negative, axis_limit_positive], title="", showticklabels=False, showgrid=False, zeroline=False),
-        zaxis=dict(range=[axis_limit_negative, axis_limit_positive], title="", showticklabels=False, showgrid=False, zeroline=False),
+        xaxis=dict(range=[axis_limit_negative, axis_limit_positive], title="", showticklabels=False, showgrid=True, zeroline=False),
+        yaxis=dict(range=[axis_limit_negative, axis_limit_positive], title="", showticklabels=False, showgrid=True, zeroline=False),
+        zaxis=dict(range=[axis_limit_negative, axis_limit_positive], title="", showticklabels=False, showgrid=True, zeroline=False),
         aspectmode="cube"  # Сохраняем пропорции осей
     ),
     legend=dict(title="Оси напряжений")
